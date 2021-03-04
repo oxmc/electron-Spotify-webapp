@@ -1,0 +1,91 @@
+{
+  "name": "Astrobuild2",
+  "productName": "Astrobuild2 launcher",
+  "version": "0.0.1",
+  "description": "Astrobuild2 launcher for Raspberry pi device.",
+  "main": "src/js/main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "pack:out": "electron-builder --dir -c.directories.output",
+    "dist": "electron-builder",
+    "dist-armhost": "electron-builder --arm64 --armv7l --x64 --ia32 -l tar.gz AppImage"
+  },
+  "keywords": [
+    "Astrobuild2",
+    "webapp",
+    "electron"
+  ],
+  "author": {
+    "name": "oxmc",
+    "email": "sethlelandolivarez@gmail.om",
+    "url": "https://github.com/oxmc"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oxmc/Astrobuild2-launcher"
+  },
+  "bugs": {
+    "url": "https://github.com/oxmc/Astrobuild2-launcher/issues"
+  },
+  "homepage": "https://github.com/oxmc/Astrobuild2-launcher#readme",
+  "build": {
+    "appId": "com.${author}.${name}",
+    "icon": "icons/app.png",
+    "artifactName":"${name}-v${version}-${platform}-${arch}.${ext}",
+    "linux": {
+      "target": [
+        {
+          "target": "tar.gz",
+          "arch": ["ia32", "x64", "armv7l", "arm64"]
+        },
+        {
+          "target": "deb",
+          "arch": ["ia32", "x64"]
+        },
+        {
+          "target": "AppImage",
+          "arch": ["ia32", "x64", "armv7l", "arm64"]
+        },
+        {
+          "target": "rpm",
+          "arch": ["ia32", "x64"]
+        },
+        {
+          "target": "pacman",
+          "arch": ["ia32", "x64"]
+        }
+      ],
+      "desktop": {
+        "Name": "Astrobuild2-launcher",
+        "Icon": "logo",
+        "Comment": "Astrobuild2 launcher for Raspberry pi device.",
+        "Categories": [
+          "Network",
+          "electron",
+          "web"
+        ]
+      },
+      "category": "Network"
+    },
+    "extraResources": [
+      {
+        "from": "icons/app.png",
+        "to": "app.png"
+      }
+    ],
+    "extraFiles": [
+      "LICENSE.md"
+    ],
+    "files": ["!PKGBUILD", "!README.md", "!TRANSLATE.md"]
+  },
+  "devDependencies": {
+    "electron": "^10.1.5",
+    "electron-builder": "^22.9.1"
+  },
+  "dependencies": {
+    "deepmerge": "^4.2.2",
+    "electron-json-config": "^1.5.3"
+  }
+}

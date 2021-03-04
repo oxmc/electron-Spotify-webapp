@@ -1,0 +1,17 @@
+{
+	"tray":{
+		"toggle": "Alternar",
+		"quit": "Salir de Discord"
+	},
+	"context":{
+		"copy": "Copiar",
+		"paste": "Pegar",
+		"cut": "Cortar",
+		"dictionaryAdd": "Añadir al diccionario local"
+	},
+	"help": {
+		"about": "Acerca de",
+		"contributors": "Autores y contribuyentes:",
+		"credits": ""
+	}
+}
