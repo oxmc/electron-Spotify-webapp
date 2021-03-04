@@ -43,7 +43,7 @@ function loadTranslations() {
 }
 
 // Vars to modify app behavior
-var appURL = 'https://oxmc.github.io/Astrobuild2/'
+var appURL = 'https://spotify.com'
 var appIcon = `${appIconDir}/app.png`
 var appTrayIcon = `${appDir}/icons/tray.png`
 var appTrayPing = `${appDir}/icons/tray-ping.png`
@@ -55,7 +55,7 @@ var winHeight = 600
 var appFullName = app.getName()
 var appVersion = packageJson.version;
 var appAuthor = packageJson.author.name
-var appYear = '2020' // the year since this app exists
+var appYear = '2021' // the year since this app exists
 var appRepo = packageJson.homepage;
 var chromiumVersion = process.versions.chrome
 
