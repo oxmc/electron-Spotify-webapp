@@ -105,9 +105,11 @@ exports.bar = (repoLink, mainWindow) => {
 					}
 				}
 			},
-			/* This will be back once I'll do my own JS game :)
-			 * Right now, if you're reading this, you can use it
-			 * to integrate any website within my app (for some reason)
+			/*
+			  This will be back once I'll do my own JS game :)
+			  Right now, if you're reading this, you can use it
+			  to integrate any website within my app (for some reason)
+			*/
 			{
 			
 				label: "Template",
