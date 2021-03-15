@@ -45,14 +45,14 @@ exports.context = (windowName) => {
 exports.tray = (Icon, IconSmall, windowName) => {
 	tray = new Tray(Icon)
 	const contextMenu = Menu.buildFromTemplate([
-		{ label: 'Astrobuild2-Launcher', enabled: false, icon: IconSmall },
+		{ label: 'electron-spotify-webapp', enabled: false, icon: IconSmall },
 		{ type: 'separator' },
 		{ label: l10nStrings.help.about, role: 'about', click: function() { app.showAboutPanel();;}},
 		{ type: 'separator' },
 		{ label: l10nStrings.tray.toggle, click: function() { windowName.isVisible() ? windowName.hide() : windowName.show();; } },
 		{ label: l10nStrings.tray.quit, click: function() { wantQuit = true; app.quit();; } }
 	])
-	tray.setToolTip('Astrobuild2')
+	tray.setToolTip('electron-spotify-webapp')
 	tray.setContextMenu(contextMenu)
 	// Exit to the tray
 	windowName.on('close', (event) => {
@@ -131,7 +131,7 @@ exports.bar = (repoLink, mainWindow) => {
 				}
 				
 			}
-			*/
+									  
 		]},
 		{ label: l10nStrings.help.groupName, role: 'help', submenu: [
 			{ label: l10nStrings.help.about, role: 'about', click: function() { app.showAboutPanel();;}},
