@@ -15,6 +15,6 @@ This repo is based on Spacingbat03's electron-discord-webapp
 
 # Windows
 
-Here is the main window,
+Here is the main window, (on mac)
 
-[Main window mac](./assets/CBABA765-F5EB-4880-8F62-6FF2F8540877.png)
+![Main window on Mac](./assets/CBABA765-F5EB-4880-8F62-6FF2F8540877.png)
