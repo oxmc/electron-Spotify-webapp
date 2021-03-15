@@ -1,8 +1,8 @@
 {
-  "name": "Astrobuild2",
-  "productName": "Astrobuild2 launcher",
+  "name": "Spotify webapp",
+  "productName": "Spotify webapp",
   "version": "0.0.1",
-  "description": "Astrobuild2 launcher for Raspberry pi device.",
+  "description": "A Spotify webapp for Raspberry pi devices.",
   "main": "src/js/main.js",
   "scripts": {
     "start": "electron .",
@@ -12,24 +12,24 @@
     "dist-armhost": "electron-builder --arm64 --armv7l --x64 --ia32 -l tar.gz AppImage"
   },
   "keywords": [
-    "Astrobuild2",
+    "Spotify",
     "webapp",
     "electron"
   ],
   "author": {
     "name": "oxmc",
-    "email": "sethlelandolivarez@gmail.om",
+    "email": "sethlelandolivarez@gmail.com",
     "url": "https://github.com/oxmc"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oxmc/Astrobuild2-launcher"
+    "url": "git+https://github.com/oxmc/electron-Spotify-webapp"
   },
   "bugs": {
-    "url": "https://github.com/oxmc/Astrobuild2-launcher/issues"
+    "url": "https://github.com/oxmc/electron-Spotify-webapp/issues"
   },
-  "homepage": "https://github.com/oxmc/Astrobuild2-launcher#readme",
+  "homepage": "https://github.com/oxmc/electron-Spotify-webapp#readme",
   "build": {
     "appId": "com.${author}.${name}",
     "icon": "icons/app.png",
@@ -58,9 +58,9 @@
         }
       ],
       "desktop": {
-        "Name": "Astrobuild2-launcher",
+        "Name": "electron-Spotify-webapp",
         "Icon": "logo",
-        "Comment": "Astrobuild2 launcher for Raspberry pi device.",
+        "Comment": "A Spotify webapp for Raspberry pi devices.",
         "Categories": [
           "Network",
           "electron",
