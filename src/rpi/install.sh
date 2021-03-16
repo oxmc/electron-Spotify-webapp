@@ -9,11 +9,9 @@ function error {
 #Main
 
 #Update apt
-sudo apt update || error "Unable to update apt!"
-#Update system
-sudo apt full-upgrade || error "Unable to update system!"
+sudo apt update || error "Unable to run apt update!"
 #Install libwidevinecdm0
-sudo apt install libwidevinecdm0 || error "Unable to install libwidevinecdm0!"
+sudo apt -fy install libwidevinecdm0 || error "Unable to install libwidevinecdm0!"
 
 #Checking if using armv6
 if [ ! -z "$(cat /proc/cpuinfo | grep ARMv6)" ];then
