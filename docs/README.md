@@ -15,6 +15,6 @@ This repo is based on Spacingbat03's electron-discord-webapp
 
 # Windows
 
-Here is the main window, (on mac)
+Here is the main window, (on `TwisterOS` using `MacOS Big Sur theme`)
 
 ![Main window on Mac](./assets/CBABA765-F5EB-4880-8F62-6FF2F8540877.png)
