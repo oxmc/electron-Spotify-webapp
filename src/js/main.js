@@ -170,6 +170,7 @@ function createWindow() {
 		shell.openExternal(externalURL)
 	})
 
+	/*
 	// "Red dot" icon feature
 	win.webContents.once('did-finish-load', () => {
 		win.webContents.on('page-favicon-updated', () => {
@@ -179,7 +180,7 @@ function createWindow() {
 		app.on('browser-window-focus', () => {
 			if(!disableTray) tray.setImage(appTrayIcon)
 		})
-	})
+	}) */
 	return win
 }
 
