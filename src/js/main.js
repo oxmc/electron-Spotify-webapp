@@ -43,7 +43,7 @@ function loadTranslations() {
 }
 
 // Vars to modify app behavior
-var appURL = 'https://spotify.com'
+var appURL = 'https://open.spotify.com/'
 var appIcon = `${appIconDir}/app.png`
 var appTrayIcon = `${appDir}/icons/tray.png`
 var appTrayPing = `${appDir}/icons/tray-ping.png`
