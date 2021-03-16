@@ -14,8 +14,28 @@ sudo apt update || error "Unable to update apt!"
 sudo apt full-upgrade || error "Unable to update system!"
 #Install libwidevinecdm0
 sudo apt install libwidevinecdm0 || error "Unable to install libwidevinecdm0!"
-#Install nodejs
-sudo apt install nodejs || error "Unable to install nodejs!"
+
+#Checking if using armv6
+if [ ! -z "$(cat /proc/cpuinfo | grep ARMv6)" ];then
+  error "armv6 cpu not supported"
+fi
+
+if ! command -v curl >/dev/null ; then
+  echo -e "\033[0;31mcurl: command not found.\e[39m
+You need to install curl first. If you are on a debian system, this command should install it:
+\e[4msudo apt install curl\e[0m"
+  exit 1
+fi
+
+#Install nvm manager:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash || error "Failed to install nvm!"
+#source ~/.bashrc
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#Install NodeJS:
+nvm install node || error "unable to install nodejs!"
 
 #Clone this repo
 git clone https://github.com/oxmc/electron-Spotify-webapp || error "Unable to clone repo!"
