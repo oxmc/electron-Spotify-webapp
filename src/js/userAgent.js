@@ -18,7 +18,7 @@ module.exports = function(chromeVersion){
 		} else {
 			var cpuArch = "x86_64"
 		}
-		var fakeUserAgent = `Mozilla/5.0 (X11; Linux ${cpuArch}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
+		var fakeUserAgent = `Mozilla/5.0 (X11; Linux ${cpuArch}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.95 Safari/537.36`;
 	}
 	return fakeUserAgent
 }
