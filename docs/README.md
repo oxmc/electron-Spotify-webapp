@@ -18,9 +18,9 @@ This repo is based on [SpacingBat3's](\https://github.com/SpacingBat3/electron-d
 
 Here is the main window, (on `TwisterOS` using `MacOS Big Sur theme`)
 
-![Main window on TwisterOS](./assets/spotify-webapp-main-window-2.png)
+![Main window on TwisterOS](./assets/spotify-webapp-main-window-3.png)
 
 
 Here is the version window, (on `TwisterOS` using `MacOS Big Sur theme`)
 
-![Version window on TwisterOS](./assets/spotify-webapp-version-window.png)
+![Version window on TwisterOS](./assets/spotify-webapp-version-window-2.png)
