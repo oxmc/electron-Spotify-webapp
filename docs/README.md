@@ -11,7 +11,7 @@
 
 A Spotify Web App made with the [Electron API](https://github.com/electron/electron), developed with the [Electron Forge](https://github.com/electron-userland/electron-forge).
 
-This repo is based on [SpacingBat3's](\https://github.com/SpacingBat3/electron-discord-webapp) electron-discord-webapp
+This repo is based on [SpacingBat3's](https://github.com/SpacingBat3/electron-discord-webapp) electron-discord-webapp
 
 
 # Windows
