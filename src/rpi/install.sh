@@ -6,6 +6,9 @@ function error {
   exit 1
 }
 
+#Variables
+DIRECTORY="$(readlink -f "$(dirname "$0")")"
+
 #Main
 
 #Update apt
