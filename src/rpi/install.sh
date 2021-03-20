@@ -50,7 +50,7 @@ if [[ "$node" == 1 ]]; then
   nvm install node || error "unable to install nodejs!"
 fi
 
-if [[ ! -d electron-Spotify-webapp ]]; then
+if [[ -d electron-Spotify-webapp ]]; then
   while true; do
     read -p "the 'electron-Spotify-webapp' folder already exists, do you want to update it ('git pull') [y/n]?" answer
     if [[ "$answer" =~ [yY] ]]; then
