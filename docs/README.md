@@ -1,3 +1,4 @@
+
 <h1><a href='https://spotify.com'><img src='../icons/app.png' width='64px'></a> Electron Spotify Web App </h1>
 
 [![MIT license](https://img.shields.io/badge/License-MIT-C23939.svg)](COPYING)
