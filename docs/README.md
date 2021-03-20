@@ -10,14 +10,14 @@
 
 A Spotify Web App made with the [Electron API](https://github.com/electron/electron), developed with the [Electron Forge](https://github.com/electron-userland/electron-forge).
 
-This repo is based on Spacingbat03's electron-discord-webapp
+This repo is based on [SpacingBat3's](\https://github.com/SpacingBat3/electron-discord-webapp) electron-discord-webapp
 
 
 # Windows
 
 Here is the main window, (on `TwisterOS` using `MacOS Big Sur theme`)
 
-![Main window on TwisterOS](./assets/spotify-webapp-main-window.png)
+![Main window on TwisterOS](./assets/spotify-webapp-main-window-2.png)
 
 
 Here is the version window, (on `TwisterOS` using `MacOS Big Sur theme`)
