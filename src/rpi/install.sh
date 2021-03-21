@@ -40,14 +40,19 @@ fi
 
 if [[ "$node" == 1 ]]; then
   #Install nvm manager:
-  wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash || error "Failed to install nvm!"
+  #wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash || error "Failed to install nvm!"
   #source ~/.bashrc
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  #export NVM_DIR="$HOME/.nvm"
+  #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
   
   #Install NodeJS:
-  nvm install node || error "unable to install nodejs!"
+  #nvm install node || error "unable to install nodejs!"
+  
+  #Add nodesource repo
+  curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+  #Install Nodejs
+  sudo apt install nodejs || error "unable to install nodejs!"
 fi
 
 if [[ -d electron-Spotify-webapp ]]; then
