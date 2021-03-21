@@ -25,12 +25,12 @@ fi
 
 cd $HOME
 
-if ! command -v curl >/dev/null ; then
-  echo -e "\033[0;31mcurl: command not found.\e[39m
-You need to install curl first. If you are on a debian system, this command should install it:
-\e[4msudo apt install curl\e[0m"
-  exit 1
-fi
+#if ! command -v curl >/dev/null ; then
+#  echo -e "\033[0;31mcurl: command not found.\e[39m
+#You need to install curl first. If you are on a debian system, this command should install it:
+#\e[4msudo apt install curl\e[0m"
+#  exit 1
+#fi
 
 if ! command -v node >/dev/null ; then
   node=1
@@ -40,7 +40,7 @@ fi
 
 if [[ "$node" == 1 ]]; then
   #Install nvm manager:
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash || error "Failed to install nvm!"
+  wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash || error "Failed to install nvm!"
   #source ~/.bashrc
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
