@@ -11,20 +11,8 @@
     "start": "electron-forge start",
     "package": "electron-forge package"    
   },
-  "author": {
-    "name": "oxmc",
-    "email": "sethlelandolivarez@gmail.com",
-    "url": "https://github.com/oxmc"
-  },
+  "author": "oxmc",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/oxmc/electron-Spotify-webapp"
-  },
-  "bugs": {
-    "url": "https://github.com/oxmc/electron-Spotify-webapp/issues"
-  },
-  "homepage": "https://github.com/oxmc/electron-Spotify-webapp#readme",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.53",
     "@electron-forge/maker-deb": "^6.0.0-beta.53",
