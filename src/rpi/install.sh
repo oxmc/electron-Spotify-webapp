@@ -75,7 +75,7 @@ fi
 #cd into repo
 cd electron-Spotify-webapp || error "Failed to change directory to '$(pwd)/electron-Spotify-webapp/'!."
 #Run npm install
-npm install || error "Unable to installed required npm packages to run Spotify-webapp!"
+npm install || error "Unable to install required npm packages to run Spotify-webapp!"
 
 #Create menu shortcuts
 #menu button
