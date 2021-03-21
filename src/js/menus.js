@@ -141,5 +141,7 @@ exports.bar = (repoLink, mainWindow) => {
 		]}
 	])
 	Menu.setApplicationMenu(menu)
+	//Ensure menubar is hidden by default
+	appConfig.set('hideMenuBar', true)
 	return menu
 }
