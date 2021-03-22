@@ -1,5 +1,5 @@
 # Maintainer: oxmc (https://github.com/oxmc)
-pkgname=electron-discord-webapp-git
+pkgname=electron-spotify-webapp-git
 pkgver=v0.2.0.rc2.r43.556b828
 pkgrel=1
 pkgdesc="A Spoify Web App based on the Electron engine."
