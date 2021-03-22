@@ -46,7 +46,6 @@ function loadTranslations() {
 var appURL = 'https://open.spotify.com/?utm_source=pwa_install'
 var appIcon = `${appIconDir}/app.png`
 var appTrayIcon = `${appDir}/icons/tray.png`
-//var appTrayPing = `${appDir}/icons/tray-ping.png`
 var appTrayIconSmall = `${appDir}/icons/tray-small.png`
 var winWidth = 1000
 var winHeight = 600
@@ -97,10 +96,25 @@ fakeUserAgent = getUserAgent(chromiumVersion)
 
 // "About" Panel:
 
+
 //line 100
 function aboutPanel() {
 	l10nStrings = loadTranslations()
 	const aboutWindow = app.setAboutPanelOptions({
+		applicationName: appFullName,
+		iconPath: appIcon,
+		applicationVersion: `release:${appVersion}`,
+		authors: appContributors,
+		website: appRepo,
+		credits: `${l10nStrings.help.contributors} ${stringContributors}`,
+		copyright: `Copyright © ${copyYear} ${appAuthor}\n\n${l10nStrings.help.credits}`
+	})
+	return aboutWindow
+}
+
+function settingsPanel() {
+	l10nStrings = loadTranslations()
+	const settingsWindow = app.setSettingsPanelOptions({
 		applicationName: appFullName,
 		iconPath: appIcon,
 		applicationVersion: `release:${appVersion}`,
