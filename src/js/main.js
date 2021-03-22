@@ -46,7 +46,7 @@ function loadTranslations() {
 var appURL = 'https://open.spotify.com/?utm_source=pwa_install'
 var appIcon = `${appIconDir}/app.png`
 var appTrayIcon = `${appDir}/icons/tray.png`
-var appTrayPing = `${appDir}/icons/tray-ping.png`
+//var appTrayPing = `${appDir}/icons/tray-ping.png`
 var appTrayIconSmall = `${appDir}/icons/tray-small.png`
 var winWidth = 1000
 var winHeight = 600
@@ -79,16 +79,6 @@ var mainWindow = null
 var noInternet = false
 const singleInstance = app.requestSingleInstanceLock()
 
-/*	Migrate old config dir to the new one.
- 	This option exist because of the compability reasons 
- 	with v0.1.X versions of this script */
-
-const oldUserPath = path.join(app.getPath('userData'), '..', packageJson.name)
-if(fs.existsSync(oldUserPath)) {
-	fs.rmdirSync(app.getPath('userData'), { recursive: true })
-	fs.renameSync(oldUserPath, app.getPath('userData'))
-}
-
 // Known boolean keys from config
 
 configKnownObjects = [
@@ -97,7 +87,6 @@ configKnownObjects = [
 ]
 
 // Year format for copyright
-//line 100
 if (appYear == currentYear){
 	var copyYear = appYear
 } else {
@@ -108,12 +97,13 @@ fakeUserAgent = getUserAgent(chromiumVersion)
 
 // "About" Panel:
 
+//line 100
 function aboutPanel() {
 	l10nStrings = loadTranslations()
 	const aboutWindow = app.setAboutPanelOptions({
 		applicationName: appFullName,
 		iconPath: appIcon,
-		applicationVersion: `v${appVersion}`,
+		applicationVersion: `release:${appVersion}`,
 		authors: appContributors,
 		website: appRepo,
 		credits: `${l10nStrings.help.contributors} ${stringContributors}`,
@@ -169,18 +159,6 @@ function createWindow() {
 		event.preventDefault();
 		shell.openExternal(externalURL)
 	})
-
-	/*
-	// "Red dot" icon feature
-	win.webContents.once('did-finish-load', () => {
-		win.webContents.on('page-favicon-updated', () => {
-			if(!win.isFocused() && !disableTray) tray.setImage(appTrayPing);
-		})
-
-		app.on('browser-window-focus', () => {
-			if(!disableTray) tray.setImage(appTrayIcon)
-		})
-	}) */
 	return win
 }
 
