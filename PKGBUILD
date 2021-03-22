@@ -1,17 +1,17 @@
-# Maintainer: Spacingbat3 (https://github.com/spacingbat3)
+# Maintainer: oxmc (https://github.com/oxmc)
 pkgname=electron-discord-webapp-git
 pkgver=v0.2.0.rc2.r43.556b828
 pkgrel=1
-pkgdesc="An Discord Web App based on the Electron engine."
+pkgdesc="A Spoify Web App based on the Electron engine."
 arch=("x86_64" "i686" "aarch64" "armv7h")
 
 _march=${CARCH}
-_author="SpacingBat3"
+_author="oxmc"
 
 license=('MIT')
 makedepends=('npm' 'git')
 provides=("${pkgname%-git}")
-conflicts=("${pkgname%-git}" "discord" "discord_arch_electron")
+conflicts=("${pkgname%-git}")
 source=("git+https://github.com/${_author}/${pkgname%-git}.git")
 md5sums=('SKIP')
 
@@ -40,7 +40,7 @@ build() {
 	printf "#!/bin/sh\n/usr/share/${pkgname%-git}/${pkgname%-git}\nexit \$?">"$1"
 	}
 	_desktop() {
-	printf "[Desktop Entry]\nVersion=1.0\nTerminal=false\nType=Application\nName=Discord\nExec=/usr/share/bin/discord\nIcon=discord\nCategories=Network;Chat;VideoConference;WebApp;Electron\nComment=Your place to talk!\nComment[pl]=Twoje miejsce do rozmów!\nGenericName=Network Messenger\nGenericName[pl]=Kommunikator internetowy\nStartupNotify=true">"$1"
+	printf "[Desktop Entry]\nVersion=1.0\nTerminal=false\nType=Application\nName=Spotify\nExec=/opt/electron-spotify-webapp/spotify-webapp\nIcon=app\nCategories=Network;WebApp;Electron\nComment=A webapp of Spotify made for the Raspberry pi.\nGenericName=Network Music Player\nStartupNotify=true">"$1"
 	}
 	cd "${srcdir}/${pkgname%-git}"
 	npm run pack:out "${srcdir}/build" -- --${_node_arch}
@@ -57,7 +57,7 @@ build() {
 package() {
 	cd "${srcdir}/build/${pkgname%-git}"
 	for x in `find * -type f`; do
-		if [[ "${x}" =~ "electron-discord-webapp" ]]; then
+		if [[ "${x}" =~ "electron-Spotify-webapp" ]]; then
 			install -Dm755 "${srcdir}/build/${pkgname%-git}/$x" "${pkgdir}/usr/share/${pkgname%-git}/${x}"
 			_error="$?"
 			[[ "${_error}" != 0 ]] && exit "${_error}"
@@ -72,7 +72,7 @@ package() {
 		fi
 	done
 	cd "${srcdir}"
-	install -Dm644 "${srcdir}/${pkgname%-git}/icons/app.png" "${pkgdir}/usr/share/icons/hicolor/512x512/apps/discord.png"
+	install -Dm644 "${srcdir}/${pkgname%-git}/icons/app.png" "${pkgdir}/usr/share/icons/hicolor/512x512/apps/spotify.png"
 	install -Dm755 "${srcdir}/${pkgname%-git}.desktop" "${pkgdir}/usr/share/applications/${pkgname%-git}.desktop"	
-	install -Dm755 "${srcdir}/${pkgname%-git}.sh" "${pkgdir}/usr/bin/discord"
+	install -Dm755 "${srcdir}/${pkgname%-git}.sh" "${pkgdir}/usr/bin/spotify"
 }
