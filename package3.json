@@ -1,8 +1,8 @@
 {
-  "name": "electron-Spotify-webapp",
+  "name": "electron-spotify-webapp",
   "productName": "Spotify-webapp",
-  "version": "0.0.3",
-  "description": "A Spotify webapp for Raspberry pi devices.",
+  "version": "0.0.1",
+  "description": "A webapp of Spotify made for the Raspberry pi",
   "main": "src/js/main.js",
   "scripts": {
     "make-mac": "npx @electron-forge/cli make --platform darwin",
@@ -12,6 +12,7 @@
     "package": "electron-forge package"    
   },
   "author": "oxmc",
+  "github": "https://github.com/oxmc",
   "license": "MIT",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.53",
@@ -19,20 +20,20 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.53",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.53",
     "@electron-forge/maker-zip": "^6.0.0-beta.53",
-    "electron": "^10.1.5",
+    "electron": "^10.1.5"
   },
   "config": {
     "forge": {
       "packagerConfig": {
         "icon": "./icons/app",
-        "name": "electron-Spotify-webapp",
-        "executableName": "Spotify-webapp"        
+        "name": "Spotify-webapp",
+        "executableName": "elctron-Spotify-webapp"        
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "electron-Spotify-webapp"
+            "name": "Spotify-webapp"
           }
         },
         {
