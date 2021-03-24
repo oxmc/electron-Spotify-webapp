@@ -1,0 +1,8 @@
+{
+  "mode": "url",
+  "devmode": "false",
+  "view": {
+    "url": "https://open.spotify.com/?utm_source=pwa_install",
+    "file": "../view/html/main.html"
+  }
+}
