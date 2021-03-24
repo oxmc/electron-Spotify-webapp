@@ -121,12 +121,6 @@ app.on('ready', function () {
   } else {
     console.log('Dev Mode: Error')
   }
-
-  var settingsWindow = new BrowserWindow({
-    width: 400,
-    height: 400,
-    show: false
-  })
   
   if (!singleInstance) {
 	app.quit()
@@ -143,12 +137,4 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
 		app.quit()
 	}
-})
-
-  ipcMain.on('toggle-settings', function () {
-    if (settingsWindow.isVisible())
-     settingsWindow.hide()
-    else
-      settingsWindow.show()
-  })
 })
