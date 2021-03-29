@@ -68,7 +68,18 @@ if (Array.isArray(ContributorsJson.contributors) && ContributorsJson.contributor
     var appContributors = [appAuthor]
 }
 
+var currentYear = new Date().getFullYear()
+var stringContributors = appContributors.join(', ')
 let mainWindow;
+
+// Year format for copyright
+if (appYear == currentYear){
+	var copyYear = appYear
+} else {
+	var copyYear = `${appYear}-${currentYear}`
+}
+
+fakeUserAgent = getUserAgent(chromiumVersion)
 
 // "About" Panel:
 function aboutPanel() {
@@ -102,7 +113,7 @@ app.on('ready', function () {
 
   if (config.mode === "url") {
     console.log('Url: True')
-    mainWindow.loadURL(config.view.url)
+    mainWindow.loadURL(config.view.url,{userAgent: fakeUserAgent})
   } else if (config.mode === "file") {
     console.log('Url: False')
     mainWindow.loadFile(config.view.file)
@@ -119,17 +130,7 @@ app.on('ready', function () {
   } else {
     console.log('Dev Mode: Error')
   }
-
-  if (!singleInstance) {
-    app.quit()
-  } else {
-    app.on('second-instance', (event, commandLine, workingDirectory) => {
-        if (mainWindow){
-            if(!mainWindow.isVisible()) mainWindow.show()
-            if(mainWindow.isMinimized()) mainWindow.restore()
-            mainWindow.focus()
-        }
-  });
+});
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
