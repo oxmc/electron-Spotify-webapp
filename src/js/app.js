@@ -92,7 +92,6 @@ function aboutPanel() {
   mainWindow.once('ready-to-show', () => {
     autoUpdater.checkForUpdatesAndNotify();
   });
-}
 
 app.on('ready', function () {
   aboutWindow = aboutPanel()
@@ -123,14 +122,14 @@ app.on('ready', function () {
 
   if (!singleInstance) {
     app.quit()
-} else {
+  } else {
     app.on('second-instance', (event, commandLine, workingDirectory) => {
         if (mainWindow){
             if(!mainWindow.isVisible()) mainWindow.show()
             if(mainWindow.isMinimized()) mainWindow.restore()
             mainWindow.focus()
         }
-    });
+  });
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
