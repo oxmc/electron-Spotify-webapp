@@ -46,7 +46,7 @@ function loadTranslations() {
 var appURL = config.view.url
 var appIcon = `${appIconDir}/app.png`
 var appTrayIcon = `${appIconDir}/tray.png`
-var appTrayPing = `${appIconDir}/tray-ping.png`
+//var appTrayPing = `${appIconDir}/tray-ping.png`
 var appTrayIconSmall = `${appIconDir}/tray-small.png`
 var winWidth = 1000
 var winHeight = 600
@@ -85,13 +85,13 @@ function aboutPanel() {
     return aboutWindow
 }
 
-  mainWindow.on('closed', function () {
-    mainWindow = null;
-  });
+mainWindow.on('closed', function () {
+  mainWindow = null;
+});
 
-  mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
-  });
+mainWindow.once('ready-to-show', () => {
+  autoUpdater.checkForUpdatesAndNotify();
+});
 
 app.on('ready', function () {
   aboutWindow = aboutPanel()
