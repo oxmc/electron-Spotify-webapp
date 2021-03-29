@@ -4,6 +4,10 @@
   "version": "0.0.1",
   "description": "A webapp of Spotify made for the Raspberry pi. DEVELOPMENT EDITION",
   "main": "src/js/app.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/johndyer24/electron-auto-update-example.git"
+  },
   "scripts": {
     "make-mac": "npx @electron-forge/cli make --platform darwin",
     "make-linux": "npx @electron-forge/cli make --platform linux",
