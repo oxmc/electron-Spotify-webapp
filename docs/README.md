@@ -1,4 +1,6 @@
 
+<h1>Important: I cloned this repo from [SpacingBat3's](https://github.com/SpacingBat3/electron-discord-webapp) electron-discord-webapp repo, the copyright notice from his part of code is [here](https://github.com/oxmc/electron-Spotify-webapp/tree/main/docs/COPYRIGHT.md).</h1>
+
 <h1><a href='https://spotify.com'><img src='../icons/app.png' width='64px'></a> Electron Spotify Web App </h1>
 
 [![MIT license](https://img.shields.io/badge/License-MIT-C23939.svg)](COPYING)
@@ -10,8 +12,6 @@
 <!--[![Run tests](../../../actions/workflows/build.yml/badge.svg?event=push)](../../../actions/workflows/build.yml)-->
 
 A Spotify Web App made with the [Electron API](https://github.com/electron/electron), developed with the [Electron Forge](https://github.com/electron-userland/electron-forge).
-
-This repo is based on [SpacingBat3's](https://github.com/SpacingBat3/electron-discord-webapp) electron-discord-webapp
 
 
 # Windows
