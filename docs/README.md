@@ -1,5 +1,5 @@
 
-<h1>Important: I cloned this repo from [SpacingBat3's](https://github.com/SpacingBat3/electron-discord-webapp) electron-discord-webapp repo, the copyright notice from his part of code is [here](https://github.com/oxmc/electron-Spotify-webapp/tree/main/docs/COPYRIGHT.md).</h1>
+<h1>Important: I cloned this repo from <a href="https://github.com/SpacingBat3/electron-discord-webapp">SpacingBat3's</a> electron-discord-webapp repo, the copyright notice from his part of code is <a href="https://github.com/oxmc/electron-Spotify-webapp/tree/main/docs/COPYRIGHT.md">here</a>.</h1>
 
 <h1><a href='https://spotify.com'><img src='../icons/app.png' width='64px'></a> Electron Spotify Web App </h1>
 
