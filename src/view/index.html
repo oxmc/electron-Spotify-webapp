@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+  <title>UwUBot-Status</title>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background-color: #eaeaea;
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>UwUBot status</h1>
+  <p id="version"></p>
+  <iframe id="iframe" height="1000" width="1000" src="http://uwubot.org/dashboard/" frameBorder="0">Browser not compatible.</iframe>
+  <!-- NodeJS part of script -->
+  <script>
+    const { ipcRenderer } = require('electron');
+    const version = document.getElementById('version');
+    
+    ipcRenderer.send('app_version');
+    ipcRenderer.on('app_version', (event, arg) => {
+      ipcRenderer.removeAllListeners('app_version');
+      version.innerText = 'Version ' + arg.version;
+    });
+    
+    var myIframe = document.getElementById('iframe');
+    myIframe.onload = function () {
+      myIframe.contentWindow.scrollTo(20,10);
+    }
+  </script>
+</body>
