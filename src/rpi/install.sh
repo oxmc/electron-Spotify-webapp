@@ -38,34 +38,34 @@ else
   node=0
 fi
 
-if [[ "$node" == 1 ]]; then
-  #Install nvm manager:
-  #wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash || error "Failed to install nvm!"
-  #source ~/.bashrc
-  #export NVM_DIR="$HOME/.nvm"
-  #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [ "$node" == 1 ]; then
+  Install nvm manager:
+  wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash || error "Failed to install nvm!"
+  source ~/.bashrc
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
   
   #Install NodeJS:
-  #nvm install node || error "unable to install nodejs!"
+  nvm install node || error "unable to install nodejs!"
   
   #Add nodesource repo
-  curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+  #curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
   #Install Nodejs
-  sudo apt install nodejs || error "unable to install nodejs!"
+  #sudo apt install nodejs || error "unable to install nodejs!"
 fi
 
-if [[ -d electron-Spotify-webapp ]]; then
+if [ -d electron-Spotify-webapp ]; then
   while true; do
     read -p "the 'electron-Spotify-webapp' folder already exists, do you want to update it ('git pull') [y/n]?" answer
-    if [[ "$answer" =~ [yY] ]]; then
+    if [ "$answer" =~ [yY] ]; then
       warning "5" "are you sure? you might delete your modifications!\nPress [CTRL+C] in the next 5 seconds to cancel."
-      cd electron-Spotify-webapp/ || error "unable to change directory to '$(pwd)/electron-Spotify-webapp'!"
+      cd $HOME/electron-Spotify-webapp/ || error "unable to change directory to '$(pwd)/electron-Spotify-webapp'!"
       git reset --hard || error "Failed to run 'git reset --hard'!"
       git fetch || error "Failed to run 'git fetch'!"
       git pull || error "Failed to run 'git pull'!"
       break
-    elif [[ "$answer" =~ [nN] ]]; then
+    elif [ "$answer" =~ [nN] ]; then
       echo "OK"
       break
     else
@@ -77,10 +77,12 @@ else
   git clone https://github.com/oxmc/electron-Spotify-webapp || error "Unable to clone repo!"
 fi
 
+cd $HOME
+
 #cd into repo
 cd electron-Spotify-webapp || error "Failed to change directory to '$(pwd)/electron-Spotify-webapp/'!."
 #Run npm install
-npm install || error "Unable to install required npm packages to run Spotify-webapp!"
+npm install  || error "Unable to install required npm packages to run Spotify-webapp!"
 
 #Create menu shortcuts
 #menu button
