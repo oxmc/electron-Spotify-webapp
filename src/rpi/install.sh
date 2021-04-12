@@ -39,7 +39,7 @@ else
 fi
 
 if [ "$node" == 1 ]; then
-  Install nvm manager:
+  #Install nvm manager:
   wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash || error "Failed to install nvm!"
   source ~/.bashrc
   export NVM_DIR="$HOME/.nvm"
