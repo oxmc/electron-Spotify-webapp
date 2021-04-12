@@ -8,8 +8,7 @@
 [![Pi-Apps badge](https://badgen.net/badge/Pi-Apps%3F/No/c51a4a?icon=https://gitcdn.link/repo/Botspot/pi-apps/master/icons/logo.svg)](https://github.com/Botspot/pi-apps)
 <!--[![Run tests](../../../actions/workflows/build.yml/badge.svg?event=push)](../../../actions/workflows/build.yml)-->
 
-A Spotify Web App made with the [Electron API](https://github.com/electron/electron), developed with the [Electron Forge](https://github.com/electron-userland/electron-forge).
-
+A Spotify Web App made with the [Electron API](https://github.com/electron/electron).
 
 <!--
 # Windows
