@@ -110,10 +110,10 @@ fi
 
 #Inform user that the install has finished
 #Check if finished with errors
-if [ ${fwe} == 1 ]; then
+if [ ${fwe} == "1" ]; then
   echo "This script finished with errors, Here are the errors: "
   exit 1
-elif [ ${fwe} == 0 ]; then
+elif [ ${fwe} == "0" ]; then
   echo "Finished!"
   exit 0
 fi
