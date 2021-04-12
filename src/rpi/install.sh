@@ -1,9 +1,23 @@
 #!/bin/bash
 
+#Variables
+repo="https://github.com/oxmc/electron-Spotify-webapp"
+appdir="electron-Spotify-webapp"
+clonename=""
+appname="Spotify-webapp"
+
+fwe=""
+ers=""
+
 #Functions
 function error {
   echo -e "\e[91m$1\e[39m"
-  exit 1
+  if [ "$2" == "exit" ]; then
+    exit 1
+  else
+    fwe="1"
+    ers+="$1"
+  fi
 }
 
 function warning {
@@ -12,25 +26,12 @@ function warning {
 }
 
 #Main
-
-#Update apt
-#sudo apt update || error "Unable to run apt update!"
-#Install libwidevinecdm0
-#sudo apt -fy install libwidevinecdm0 || error "Unable to install libwidevinecdm0!"
-
-#Checking if using armv6
+#Check if using armv6 cpu
 if [ ! -z "$(cat /proc/cpuinfo | grep ARMv6)" ];then
   error "armv6 cpu not supported"
 fi
 
 cd $HOME
-
-if ! command -v curl >/dev/null ; then
-  echo -e "\033[0;31mcurl: command not found.\e[39m
-You need to install curl first. If you are on a debian system, this command should install it:
-\e[4msudo apt install curl\e[0m"
-  exit 1
-fi
 
 if ! command -v node >/dev/null ; then
   node=1
@@ -38,8 +39,8 @@ else
   node=0
 fi
 
-if [ "$node" == 1 ]; then
-  Install nvm manager:
+if [ "${node}" == 1 ]; then
+  #Install nvm manager:
   wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash || error "Failed to install nvm!"
   source ~/.bashrc
   export NVM_DIR="$HOME/.nvm"
@@ -48,47 +49,42 @@ if [ "$node" == 1 ]; then
   
   #Install NodeJS:
   nvm install node || error "unable to install nodejs!"
-  
-  #Add nodesource repo
-  #curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
-  #Install Nodejs
-  #sudo apt install nodejs || error "unable to install nodejs!"
 fi
 
-if [ -d electron-Spotify-webapp ]; then
+if [ -d '$HOME/${appdir}' ]; then
   while true; do
-    read -p "the 'electron-Spotify-webapp' folder already exists, do you want to update it ('git pull') [y/n]?" answer
-    if [ "$answer" =~ [yY] ]; then
+    read -p "the '$appdir' folder already exists, do you want to update it ('git pull') [y/n]? " answer
+    if [[ "${answer}" =~ [yY] ]]; then
       warning "5" "are you sure? you might delete your modifications!\nPress [CTRL+C] in the next 5 seconds to cancel."
-      cd $HOME/electron-Spotify-webapp/ || error "unable to change directory to '$(pwd)/electron-Spotify-webapp'!"
+      cd $HOME/$appdir/ || error "unable to change directory to '$(pwd)/$appdir'!"
       git reset --hard || error "Failed to run 'git reset --hard'!"
       git fetch || error "Failed to run 'git fetch'!"
       git pull || error "Failed to run 'git pull'!"
       break
-    elif [ "$answer" =~ [nN] ]; then
-      echo "OK"
-      break
+    elif [[ "${answer}" =~ [nN] ]]; then
+      echo "OK, exiting now..."
+      exit 0
     else
       warning 0 "'$answer' is a invalid answer! please try again."
     fi
   done
 else
   #Clone this repo
-  git clone https://github.com/oxmc/electron-Spotify-webapp || error "Unable to clone repo!"
+  git clone $repo $clonename || error "Unable to clone repo!" "exit"
 fi
 
 cd $HOME
 
 #cd into repo
-cd electron-Spotify-webapp || error "Failed to change directory to '$(pwd)/electron-Spotify-webapp/'!."
+cd $appdir || error "Failed to change directory to '$(pwd)/$appdir/'!"
 #Run npm install
-npm install  || error "Unable to install required npm packages to run Spotify-webapp!"
+npm install  || error "Unable to install required npm packages to run $appname!"
 
 #Create menu shortcuts
 #menu button
 if [ ! -f ~/.local/share/applications/Spotify-webapp.desktop ];then
   echo "Creating menu button..."
-  mkdir -p ~/.local/share/applications
+  mkdir -p ~/.local/share/applications || error "Unable to create $(HOME)/.local/share/applications !"
   echo "[Desktop Entry]
   Name=Spotify
   Comment=A webapp of Spotify made for the raspberry pi
@@ -98,14 +94,26 @@ if [ ! -f ~/.local/share/applications/Spotify-webapp.desktop ];then
   Terminal=false
   Type=Application
   Categories=Utility;" > ~/.local/share/applications/Spotify-webapp.desktop
+  if [ ! -f ~/.local/share/applications/Spotify-webapp.desktop ]; then
+    error "Unable to create menu shortcut!"
+  fi
 fi
 
 if [ ! -f ~/Desktop/Spotify.desktop ];then
   echo "Adding Desktop shortcut..."
-  cp -f ~/.local/share/applications/Spotify-webapp.desktop ~/Desktop/Spotify.desktop
-  chmod +x ~/Desktop/Spotify.desktop
+  cp -f ~/.local/share/applications/Spotify-webapp.desktop ~/Desktop/Spotify.desktop || error "Unable to create Desktop shortcut!"
+  chmod +x ~/Desktop/Spotify.desktop || error "Unable to change file permissons for '$(HOME)/Desktop/Spotify.desktop'!"
+  if [ ! -f ~/Desktop/Spotify.desktop ]; then
+    error "Unable to create Desktop shortcut!"
+  fi
 fi
 
-#Inform user procces finished
-echo "Finished!"
-exit 0
+#Inform user that the install has finished
+#Check if finished with errors
+if [ ${fwe} == 1 ]; then
+  echo "This script finished with errors, Here are the errors: "
+  exit 1
+elif [ ${fwe} == 0 ]; then
+  echo "Finished!"
+  exit 0
+fi

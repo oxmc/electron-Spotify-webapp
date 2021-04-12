@@ -1,6 +1,3 @@
-
-<h1>Important: I cloned this repo from <a href="https://github.com/SpacingBat3/electron-discord-webapp">SpacingBat3's</a> electron-discord-webapp repo, the copyright notice from his part of code is <a href="https://github.com/oxmc/electron-Spotify-webapp/tree/main/docs/COPYRIGHT.md">here</a>.</h1>
-
 <h1><a href='https://spotify.com'><img src='../icons/app.png' width='64px'></a> Electron Spotify Web App </h1>
 
 [![MIT license](https://img.shields.io/badge/License-MIT-C23939.svg)](COPYING)
@@ -14,6 +11,7 @@
 A Spotify Web App made with the [Electron API](https://github.com/electron/electron), developed with the [Electron Forge](https://github.com/electron-userland/electron-forge).
 
 
+<!--
 # Windows
 
 Here is the main window, (on `TwisterOS` using `MacOS Big Sur theme`)
@@ -24,3 +22,4 @@ Here is the main window, (on `TwisterOS` using `MacOS Big Sur theme`)
 Here is the version window, (on `TwisterOS` using `MacOS Big Sur theme`)
 
 ![Version window on TwisterOS](./assets/spotify-webapp-version-window-2.png)
+-->
