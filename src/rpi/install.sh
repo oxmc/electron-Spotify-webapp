@@ -5,6 +5,7 @@ repo="https://github.com/oxmc/electron-Spotify-webapp"
 appdir="electron-Spotify-webapp"
 clonename=""
 appname="Spotify-webapp"
+branch="-b dev-stable"
 
 fwe=""
 ers=""
@@ -71,7 +72,7 @@ if [ -d '$HOME/${appdir}' ]; then
   done
 else
   #Clone this repo
-  git clone $repo $clonename || error "Unable to clone repo!" "exit"
+  git clone $repo $clonename $branch || error "Unable to clone repo!" "exit"
 fi
 
 cd $HOME
