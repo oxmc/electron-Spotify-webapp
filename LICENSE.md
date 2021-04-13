@@ -2,6 +2,7 @@
 
 Copyright © `2020-2021` SpacingBat3
 
+
 Copyright © `2021` oxmc
 
 Copyright for portions of project "electron-Spotify-webapp" are held by SpacingBat3 as part of project WebCord (aka. "electron-discord-webapp"). All other copyright for project "electron-Spotify-webapp" are held by oxmc.
