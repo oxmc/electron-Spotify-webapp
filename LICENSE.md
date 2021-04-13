@@ -1,6 +1,10 @@
 # MIT License
 
-**Copyright © `2020-2021` `oxmc and SpacingBat3`**
+Copyright for portions of project "electron-Spotify-webapp" are held by
+SpacingBat3 as part of project WebCord (aka. "electron-discord-webapp").
+All other copyright for project "electron-Spotify-webapp" are held by oxmc.
+
+**Copyright © `2021` `oxmc`**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
