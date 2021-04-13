@@ -55,6 +55,35 @@ let tray;
 // Don't show the app in the doc
 app.dock.hide()
 
+//Load useragent
+var chromiumVersion = process.versions.chrome
+const getUserAgent = require(appdir + '/js/userAgent.js')
+fakeUserAgent = getUserAgent(chromiumVersion)
+
+var contrib = require(appdir + '/contributors.json') // Read contributors.json
+var packageJson = require(app.getAppPath() + '/package.json') // Read package.json
+
+// "About" information
+var appAuthor = packageJson.author
+var appRepo = packageJson.appRepo
+
+if (Array.isArray(contrib.contributors) && contrib.contributors.length) {
+	var appContributors = [ appAuthor, ...contrib.contributors ]
+} else {
+	var appContributors = [appAuthor]
+}
+
+var appYear = '2021' // the year since this app exists
+var currentYear = new Date().getFullYear()
+var stringContributors = appContributors.join(', ')
+
+// Year format for copyright
+if (appYear == currentYear){
+	var copyYear = appYear
+} else {
+	var copyYear = `${appYear}-${currentYear}`
+}
+
 const createTray = () => {
   tray = new Tray(path.join(icondir, '/tray-icon.png'))
   const trayMenuTemplate = [
@@ -71,10 +100,25 @@ const createTray = () => {
             {
                label: 'Made by: ' + config.contrib,
                enabled: false
-            }
+            },
+
+            { type: 'separator' },
+	    { label: 'about', role: 'about', click: function() { app.showAboutPanel();;}},
+	    { label: 'quit', role: 'quit', click: function() { app.quit();;}}
          ]
   let trayMenu = Menu.buildFromTemplate(trayMenuTemplate)
   tray.setContextMenu(trayMenu)
+  
+  const aboutWindow = app.setAboutPanelOptions({
+	applicationName: appname,
+	iconPath: icondir + '/tray-small.png',
+	applicationVersion: 'version: ' + appversion,
+	authors: appAuthor,
+	website: appRepo,
+	credits: 'credits: ' + stringContributors,
+	copyright: 'Copyright © ' + copyYear + ' ' + appAuthor
+  })
+  return aboutWindow
 }
 
 function createWindow () {
@@ -88,7 +132,7 @@ function createWindow () {
   if (config.view.mode == "file") {
     mainWindow.loadFile(appdir + '/view/index.html');
   } else if (config.view.mode == "url") {
-    mainWindow.loadURL(config.view.url);
+    mainWindow.loadURL(config.view.url, {userAgent: fakeUserAgent});
   } else {
     console.log("Error: Unknown mode given at config.view.mode");
   }
