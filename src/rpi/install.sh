@@ -96,7 +96,7 @@ if [ ! -f ~/.local/share/applications/Spotify-webapp.desktop ];then
   Type=Application
   Categories=Utility;" > ~/.local/share/applications/Spotify-webapp.desktop
   if [ ! -f ~/.local/share/applications/Spotify-webapp.desktop ]; then
-    error "Unable to create menu shortcut!"
+    error "menu shortcut was unable to be created!"
   fi
 fi
 
@@ -105,7 +105,7 @@ if [ ! -f ~/Desktop/Spotify.desktop ];then
   cp -f ~/.local/share/applications/Spotify-webapp.desktop ~/Desktop/Spotify.desktop || error "Unable to create Desktop shortcut!"
   chmod +x ~/Desktop/Spotify.desktop || error "Unable to change file permissons for '$(HOME)/Desktop/Spotify.desktop'!"
   if [ ! -f ~/Desktop/Spotify.desktop ]; then
-    error "Unable to create Desktop shortcut!"
+    error "Desktop shortcut was unable to be created!"
   fi
 fi
 
