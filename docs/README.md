@@ -30,7 +30,7 @@ bash ~/electron-Spotify-webapp/src/rpi/install.sh
 <summary><b>To uninstall</b></summary>
   
 ```
-bash ~/electron-Spotify-webapp/src/rpi/uninstall.sh
+bash ~/electron-Spotify-webapp/src/rpi/uninstall
 ```
 </details>
 <!--
