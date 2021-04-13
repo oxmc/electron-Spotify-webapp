@@ -35,6 +35,7 @@ cd $HOME
 
 if ! command -v node >/dev/null ; then
   node=1
+  echo "installed" > ~/$appdir/status 
 else
   node=0
 fi
@@ -111,7 +112,7 @@ fi
 #Inform user that the install has finished
 #Check if finished with errors
 if [ "${fwe}" == "1" ]; then
-  echo "This script finished with errors, Here are the errors: "
+  echo "This script finished with errors, Here are the errors: ${ers}"
   exit 1
 elif [ "${fwe}" == "0" ]; then
   echo "Finished!"
