@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#Variables
+repo="https://github.com/oxmc/electron-Spotify-webapp"
+appdir="electron-Spotify-webapp"
+appname="Spotify-webapp"
+
+fwe=""
+ers=""
+
+#Functions
+function error {
+  echo -e "\e[91m$1\e[39m"
+  if [ "$2" == "exit" ]; then
+    exit 1
+  else
+    fwe="1"
+    ers+="$1"
+  fi
+}
+
+function warning {
+  echo -e "\e[91m$2\e[39m"
+  sleep "$1"
+}
+
+#Main
+#Ask user if they want to uninstall nodejs
+read -p "NodeJS was installed with $appname , Do you want to uninstall it?" answer
+
