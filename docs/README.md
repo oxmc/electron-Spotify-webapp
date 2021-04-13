@@ -11,6 +11,7 @@
 A Spotify Web App made with the [Electron API](https://github.com/electron/electron).
 
 ## To install
+
 ```
 wget -qO- https://raw.githubusercontent.com/oxmc/electron-Spotify-webapp/dev-stable/src/rpi/install.sh | bash
 ```
@@ -18,6 +19,7 @@ The install script ensures node is installed, and creates two menu buttons.
 
 <details>
 <summary><b>To install manually</b> if you prefer to see what happens under the hood</summary>
+  
 ```
 git clone -b dev-stable https://github.com/oxmc/electron-Spotify-webapp
 bash ~/electron-Spotify-webapp/src/rpi/install.sh
@@ -26,8 +28,9 @@ bash ~/electron-Spotify-webapp/src/rpi/install.sh
 
 <details>
 <summary><b>To uninstall</b></summary>
+  
 ```
-~/electron-Spotify-webapp/src/rpi/uninstall.sh
+bash ~/electron-Spotify-webapp/src/rpi/uninstall.sh
 ```
 </details>
 <!--
