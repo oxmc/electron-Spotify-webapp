@@ -1,265 +1,181 @@
+const { app, BrowserWindow, Tray, Menu, ipcMain } = require('electron');
+const { autoUpdater } = require('electron-updater');
+const notifier = require('node-notifier');
+const url = require('url');
+const path = require('path');
 
-// Load the stuff we need to have there:
+var appdir = path.join(app.getAppPath(), '/src');
+var icondir = path.join(appdir, '/icons');
+var appname = app.getName();
+var appversion = app.getVersion();
+const config = require(appdir + '/config.json');
 
-const { app, BrowserWindow, shell, ipcMain, Menu } = require('electron')
-const fs = require('fs')
-const path = require('path')
-const appConfig = new require('electron-json-config')
-var deepmerge = require('deepmerge')
+console.log('appname: ' + appname);
+console.log('appversion: ' + appversion);
+console.log('appdir: ' + appdir);
+console.log('icondir: ' + icondir);
 
-/*	Get current app dir – also removes the need of importing icons
-	manually to the electron package dir. */
-
-const appDir = app.getAppPath()
-
-/*	Check if we are using the packaged version.
-	This also fixes for "About" icon (that can't be loaded with the electron
-	when it is packaged in ASAR) */
-
-if (appDir.indexOf("app.asar") < 0) {
-	var appIconDir = `${appDir}/icons`
-} else {
-	var appIconDir = process.resourcesPath
+function notification(mode) {
+  if (mode == "1") {
+    notifier.notify({
+        title: 'Update availible.',
+        message: 'An update is availible, click here to update.',
+        icon: icondir + '/updateavil.png',
+        sound: true,
+        wait: true
+      },
+      function (err, response1) {
+        if (response1 == "activate") {
+          console.log("User wants to update, shutting down app...");
+          app.quit();
+        }
+      }
+    );
+  } else if (mode == "2") {
+    notifier.notify({
+        title: 'Update downloaded.',
+        message: 'An update has been downloaded, click here to update.',
+        icon: icondir + '/updatedown.png',
+        sound: true,
+        wait: true
+      },
+      function (err, response) {
+        if (response == "activate") {
+          console.log("User wants to update, shutting down app...");
+          app.quit();
+        }
+      }
+    );
+  }
 }
 
-var packageJson = require(`${appDir}/package.json`) // Read package.json
+let mainWindow;
+let tray;
 
-// Load scripts:
-const getUserAgent = require(`${appDir}/src/js/userAgent.js`)
-const getMenu = require(`${appDir}/src/js/menus.js`)
+// Don't show the app in the doc
+app.dock.hide()
 
-// Load string translations:
-function loadTranslations() {
-	var systemLang = app.getLocale()
-	var localStrings = `src/lang/${systemLang}/strings.json`
-	var globalStrings = require(`${appDir}/src/lang/en-GB/strings.json`)
-	if(fs.existsSync(path.join(appDir, localStrings))) {
-		var localStrings = require(`${appDir}/src/lang/${systemLang}/strings.json`)
-		var l10nStrings = deepmerge(globalStrings, localStrings)
-	} else {
-		var l10nStrings = globalStrings // Default lang to english
-	}
-	return l10nStrings
-}
+//Load useragent
+var chromiumVersion = process.versions.chrome
+const getUserAgent = require(appdir + '/js/userAgent.js')
+fakeUserAgent = getUserAgent(chromiumVersion)
 
-// Vars to modify app behavior
-var appURL = 'https://open.spotify.com/?utm_source=pwa_install'
-var appIcon = `${appIconDir}/app.png`
-var appTrayIcon = `${appDir}/icons/tray.png`
-var appTrayPing = `${appDir}/icons/tray-ping.png`
-var appTrayIconSmall = `${appDir}/icons/tray-small.png`
-var winWidth = 1000
-var winHeight = 600
+var contrib = require(appdir + '/contributors.json') // Read contributors.json
+var packageJson = require(app.getAppPath() + '/package.json') // Read package.json
 
 // "About" information
-var appFullName = app.getName()
-var appVersion = packageJson.version;
-var appAuthor = packageJson.author.name
-var appYear = '2021' // the year since this app exists
-var appRepo = packageJson.homepage;
-var chromiumVersion = process.versions.chrome
+var appAuthor = packageJson.author
+var appRepo = packageJson.appRepo
 
-
-/* Remember to add yourself to the contributors array in the package.json
-   if you're improving the code of this application */
-
-if (Array.isArray(packageJson.contributors) && packageJson.contributors.length) {
-	var appContributors = [ appAuthor, ...packageJson.contributors ]
+if (Array.isArray(contrib.contributors) && contrib.contributors.length) {
+	var appContributors = [ appAuthor, ...contrib.contributors ]
 } else {
 	var appContributors = [appAuthor]
 }
 
-// "Static" Variables that shouldn't be changed
-
-let tray = null
-var wantQuit = false
+var appYear = '2021' // the year since this app exists
 var currentYear = new Date().getFullYear()
 var stringContributors = appContributors.join(', ')
-var mainWindow = null
-var noInternet = false
-const singleInstance = app.requestSingleInstanceLock()
-
-/*	Migrate old config dir to the new one.
- 	This option exist because of the compability reasons 
- 	with v0.1.X versions of this script */
-
-const oldUserPath = path.join(app.getPath('userData'), '..', packageJson.name)
-if(fs.existsSync(oldUserPath)) {
-	fs.rmdirSync(app.getPath('userData'), { recursive: true })
-	fs.renameSync(oldUserPath, app.getPath('userData'))
-}
-
-// Known boolean keys from config
-
-configKnownObjects = [
-	'disableTray',
-	'hideMenuBar'
-]
 
 // Year format for copyright
-//line 100
 if (appYear == currentYear){
 	var copyYear = appYear
 } else {
 	var copyYear = `${appYear}-${currentYear}`
 }
 
-fakeUserAgent = getUserAgent(chromiumVersion)
+const createTray = () => {
+  tray = new Tray(path.join(icondir, '/tray-icon.png'))
+  const trayMenuTemplate = [
+            {
+               label: appname,
+               enabled: false
+            },
+            
+            {
+               label: 'Version: ' + appversion,
+               enabled: false
+            },
 
-// "About" Panel:
+            {
+               label: 'Made by: ' + config.contrib,
+               enabled: false
+            },
 
-function aboutPanel() {
-	l10nStrings = loadTranslations()
-	const aboutWindow = app.setAboutPanelOptions({
-		applicationName: appFullName,
-		iconPath: appIcon,
-		applicationVersion: `v${appVersion}`,
-		authors: appContributors,
-		website: appRepo,
-		credits: `${l10nStrings.help.contributors} ${stringContributors}`,
-		copyright: `Copyright © ${copyYear} ${appAuthor}\n\n${l10nStrings.help.credits}`
-	})
-	return aboutWindow
+            { type: 'separator' },
+	    { label: 'about', role: 'about', click: function() { app.showAboutPanel();;}},
+	    { label: 'quit', role: 'quit', click: function() { app.quit();;}}
+         ]
+  let trayMenu = Menu.buildFromTemplate(trayMenuTemplate)
+  tray.setContextMenu(trayMenu)
+  
+  const aboutWindow = app.setAboutPanelOptions({
+	applicationName: appname,
+	iconPath: icondir + '/tray-small.png',
+	applicationVersion: 'version: ' + appversion,
+	authors: appAuthor,
+	website: appRepo,
+	credits: 'credits: ' + stringContributors,
+	copyright: 'Copyright © ' + copyYear + ' ' + appAuthor
+  })
+  return aboutWindow
 }
 
-function createWindow() {
-
-	const mainWindowState = windowStateKeeper('win') // Check the window state
-
-	// Get known boolean vars from the config
-
-	for (var x = 0, len = configKnownObjects.length; x < len; x++) {
-		var y = configKnownObjects[x]
-		if (appConfig.get(y)) {
-			this[y] = appConfig.get(y)
-		} else {
-			this[y] = false;
-		}
-	}
-
-	l10nStrings = loadTranslations() // Load translations for this window
-
-	// Browser window
-	
-	const win = new BrowserWindow({
-		title: appFullName,
-		height: mainWindowState.height,
-		width: mainWindowState.width,
-		backgroundColor: "#2F3136",
-		icon: appIcon,
-		webPreferences: {
-			nodeIntegration: false, // won't work with the true value
-			devTools: false
-		}
-	})
-	win.loadURL(appURL,{userAgent: fakeUserAgent})
-	win.setAutoHideMenuBar(hideMenuBar)
-	win.setMenuBarVisibility(!hideMenuBar)
-	mainWindowState.track(win)
-
-	// Load all menus:
-
-	cmenu = getMenu.context(win)
-	if(!disableTray) tray = getMenu.tray(appTrayIcon, appTrayIconSmall, win)
-	menubar = getMenu.bar(packageJson.repository.url, win)
-
-	// Open external URLs in default browser
-
-	win.webContents.on('new-window', (event, externalURL) => {
-		event.preventDefault();
-		shell.openExternal(externalURL)
-	})
-
-	/*
-	// "Red dot" icon feature
-	win.webContents.once('did-finish-load', () => {
-		win.webContents.on('page-favicon-updated', () => {
-			if(!win.isFocused() && !disableTray) tray.setImage(appTrayPing);
-		})
-
-		app.on('browser-window-focus', () => {
-			if(!disableTray) tray.setImage(appTrayIcon)
-		})
-	}) */
-	return win
+function createWindow () {
+  mainWindow = new BrowserWindow({
+    width: 1040,
+    height: 900,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
+  if (config.view.mode == "file") {
+    mainWindow.loadFile(appdir + '/view/index.html');
+  } else if (config.view.mode == "url") {
+    mainWindow.loadURL(config.view.url, {userAgent: fakeUserAgent});
+  } else {
+    console.log("Error: Unknown mode given at config.view.mode");
+  }
+  mainWindow.on('closed', function () {
+    mainWindow = null;
+  });
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
 }
 
-// Remember window state
+app.on('ready', () => {
+  createWindow();
+  createTray()
+});
 
-function windowStateKeeper(windowName) {
-	let window, windowState;
-	function setBounds() {
+app.on('window-all-closed', function () {
+  //Remove macos detection
+  //if (process.platform !== 'darwin') {
+    app.quit();
+  //}
+});
 
-		// Restore from appConfig
+app.on('activate', function () {
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
 
-		if (appConfig.has(`windowState.${windowName}`)) {
-			windowState = appConfig.get(`windowState.${windowName}`);
-			return;
-		}
+ipcMain.on('app_version', (event) => {
+  event.sender.send('app_version', { version: app.getVersion() });
+});
 
-		// Default
+autoUpdater.on('update-available', () => {
+  //mainWindow.webContents.send('update_available');
+  notification(1)
+});
 
-		windowState = {
-			width: winWidth,
-			height: winHeight,
-		};
-	}
-	function saveState() {
-		if (!windowState.isMaximized) {
-			windowState = window.getBounds();
-		}
-		windowState.isMaximized = window.isMaximized();
-		appConfig.set(`windowState.${windowName}`, windowState);
-	}
-	function track(win) {
-		window = win;
-		eventList = ['resize', 'close'];
-		for (var i = 0, len = eventList.length; i < len; i++) {
-			win.on(eventList[i], saveState);
-		}
-	}
-	setBounds();
-	return({
-		width: windowState.width,
-		height: windowState.height,
-		isMaximized: windowState.isMaximized,
-		track,
-	});
-}
+autoUpdater.on('update-downloaded', () => {
+  //mainWindow.webContents.send('update_downloaded');
+  notification(2)
+});
 
-// Check if other scripts wants app to quit
-
-ipcMain.on('want-to-quit', () => {
-	var wantQuit = true
-	app.quit()
-})
-
-
-if (!singleInstance) {
-	app.quit()
-} else {
-	app.on('second-instance', (event, commandLine, workingDirectory) => {
-		if (mainWindow){
-			if(!mainWindow.isVisible()) mainWindow.show()
-			if(mainWindow.isMinimized()) mainWindow.restore()
-			mainWindow.focus()
-		}
-	})
-	app.on('ready', () => {
-		mainWindow = createWindow() // catch window as mainWindow
-		aboutWindow = aboutPanel()
-	})
-}
-
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit()
-	}
-})
-
-app.on('activate', () => {
-	if (BrowserWindow.getAllWindows().length === 0) {
-		mainWindow = createWindow()
-		aboutWindow = aboutPanel()
-	}
-})
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
+});

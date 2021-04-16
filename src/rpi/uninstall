@@ -1,0 +1,61 @@
+#!/bin/bash
+
+#Variables
+repo="https://github.com/oxmc/electron-Spotify-webapp"
+appdir="electron-Spotify-webapp"
+appname="Spotify-webapp"
+
+fwe=""
+ers=""
+
+#Functions
+function error {
+  echo -e "\e[91m$1\e[39m"
+  if [ "$2" == "exit" ]; then
+    exit 1
+  else
+    fwe="1"
+    ers+="$1"
+  fi
+}
+
+function warning {
+  echo -e "\e[91m$2\e[39m"
+  sleep "$1"
+}
+
+#Main
+#Ask user if they want to uninstall nodejs
+
+while true; do
+  read -p "NodeJS was installed with $appname , Do you want to uninstall it? (y/n) " answer
+  if [[ "${answer}" =~ [yY] ]]; then
+      warning "5" "are you sure?\nPress [CTRL+C] in the next 5 seconds to cancel."
+      rm -rf $NVM_DIR ~/.npm ~/.bower || error "Unable to delete NVM directory!"
+      break
+    elif [[ "${answer}" =~ [nN] ]]; then
+      echo "OK, exiting now..."
+      exit 0
+    else
+      warning 0 "'$answer' is a invalid answer! please try again."
+  fi
+done
+
+if [ -f ~/.local/share/applications/Spotify-webapp.desktop ]; then
+  echo "Uninstalling menu button..."
+  rm -rf ~/.local/share/applications/Spotify-webapp.desktop || error "Unable to delete app from menu"
+  if [-f ~/Desktop/Spotify.desktop ]; then
+    echo "Uninstalling desktop app..."
+    rm -rf ~/Desktop/Spotify.desktop || error "Unable to delete app from desktop"
+  fi
+fi
+
+#Inform user that the install has finished
+#Check if finished with errors
+if [ "${fwe}" == "1" ]; then
+  echo "This script finished with errors, Here are the errors: ${ers}"
+  exit 1
+elif [ "${fwe}" == "0" ]; then
+  echo "Finished!"
+  exit 0
+fi
